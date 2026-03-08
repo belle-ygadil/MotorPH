@@ -346,7 +346,7 @@ public class MotorPHPayrollSystem {
     }
 
     // =======================================================
-    // GOVERNMENT DEDUCTION METHODS (from Task 9)
+    // GOVERNMENT DEDUCTION METHODS 
     // All computed on the combined monthly gross salary.
     // =======================================================
 
