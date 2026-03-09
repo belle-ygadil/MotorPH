@@ -10,7 +10,7 @@ John Mervin Layson – Reviewed and revised the initial code of the payroll syst
 Kera Froilan Montejo – Collaborated with Ysabelle in revising and improving parts of the code to help ensure the system functions correctly. She also worked with the team in organizing and managing the project files in the GitHub repository to maintain proper structure and accessibility of the project.
 
 
-Program Details
+**Program Details**
 
 The MotorPH Basic Payroll System is a Java console-based program designed to read employee information and attendance records from CSV files and generate payroll summaries. The system processes employee work hours and calculates salaries and government deductions for the payroll periods from June to December 2024.
 
@@ -105,6 +105,6 @@ The output includes the payroll cutoff period, total hours worked, gross salary,
 This information allows payroll staff to review the complete salary breakdown for each payroll period.
 
 
-Project Plan File:
+**Project Plan File:**
 
 https://docs.google.com/spreadsheets/d/1lp4qZaSsJ_TknQWaCTUAn1KcZmpZVeNnY6DuaN_YkqY/edit?usp=drivesdk
