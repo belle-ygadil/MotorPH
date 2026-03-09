@@ -1,5 +1,4 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * MotorPH Payroll System
 */
 
@@ -11,20 +10,14 @@ import java.time.LocalTime;
 import java.time.Duration;
 import java.time.YearMonth;
 import java.util.Scanner;
-/**
- *
- * @author jonat
- */
+
 public class MotorPHPayrollSystem {
-    // -------------------------------------------------------
+
     // FILE PATHS 
-    // -------------------------------------------------------
     static final String EMP_FILE = "C:\\Users\\jonat\\Documents\\NetBeansProjects\\Ex1\\MotorPH\\MotorPHPayrollSystem\\src\\main\\java\\com\\mycompany\\motorphpayrollsystem\\employee_data.csv";
     static final String ATT_FILE = "C:\\Users\\jonat\\Documents\\NetBeansProjects\\Ex1\\MotorPH\\MotorPHPayrollSystem\\src\\main\\java\\com\\mycompany\\motorphpayrollsystem\\attendance";
 
-    // -------------------------------------------------------
     // MONTH RANGE: June (6) to December (12) of 2024
-    // -------------------------------------------------------
     static final int START_MONTH = 6;
     static final int END_MONTH   = 12;
     static final int YEAR        = 2024;
@@ -32,9 +25,7 @@ public class MotorPHPayrollSystem {
     public static void main(String[] args) {
   Scanner sc = new Scanner(System.in);
 
-        // -------------------------------------------------------
-        // STEP 1 — LOGIN
-        // -------------------------------------------------------
+        // LOGIN
         System.out.print("Enter username: ");
         String username = sc.nextLine().trim();
         System.out.print("Enter password: ");
@@ -50,9 +41,7 @@ public class MotorPHPayrollSystem {
             return;
         }
 
-        // -------------------------------------------------------
         // EMPLOYEE MENU
-        // -------------------------------------------------------
         if (validEmployee) {
             System.out.println("\n1. Enter your employee number");
             System.out.println("2. Exit the program");
@@ -74,9 +63,7 @@ public class MotorPHPayrollSystem {
             return;
         }
 
-        // -------------------------------------------------------
         // PAYROLL STAFF MENU
-        // -------------------------------------------------------
         if (validPayrollStaff) {
             System.out.println("\n1. Process Payroll");
             System.out.println("2. Exit the program");
@@ -115,10 +102,9 @@ public class MotorPHPayrollSystem {
         }
     }
 
-    // =======================================================
     // DISPLAY EMPLOYEE INFO (employee login)
     // Reads the CSV and prints basic employee details.
-    // =======================================================
+    
     static void displayEmployeeInfo(String inputEmpNo) {
         File f = new File(EMP_FILE);
         if (!f.exists()) {
@@ -150,9 +136,7 @@ public class MotorPHPayrollSystem {
         System.out.println("Employee number does not exist.");
     }
 
-    // =======================================================
     // PROCESS PAYROLL — ONE EMPLOYEE
-    // =======================================================
     static void processOneEmployee(String inputEmpNo) {
         // --- Find employee in CSV ---
         String[] empData = findEmployee(inputEmpNo);
@@ -176,9 +160,7 @@ public class MotorPHPayrollSystem {
         printPayroll(empNo, hourlyRate);
     }
 
-    // =======================================================
     // PROCESS PAYROLL — ALL EMPLOYEES
-    // =======================================================
     static void processAllEmployees() {
         File f = new File(EMP_FILE);
         if (!f.exists()) {
@@ -187,7 +169,7 @@ public class MotorPHPayrollSystem {
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
-            br.readLine(); // skip header
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
@@ -198,7 +180,7 @@ public class MotorPHPayrollSystem {
                 String lastName   = data[1].trim();
                 String firstName  = data[2].trim();
                 String birthday   = data[3].trim();
-                double hourlyRate = parseDouble(data[18].trim()); // column 19 = Hourly Rate
+                double hourlyRate = parseDouble(data[18].trim()); 
 
                 System.out.println("\n===================================");
                 System.out.println("Employee #    : " + empNo);
@@ -213,10 +195,8 @@ public class MotorPHPayrollSystem {
         }
     }
 
-    // =======================================================
     // PRINT PAYROLL — June to December for one employee
     // Computes hours, gross, deductions, and net per cutoff.
-    // =======================================================
     static void printPayroll(String empNo, double hourlyRate) {
 
         for (int month = START_MONTH; month <= END_MONTH; month++) {
@@ -234,7 +214,7 @@ public class MotorPHPayrollSystem {
 
             // --- Read attendance records ---
             try (BufferedReader br = new BufferedReader(new FileReader(attFile))) {
-                br.readLine(); // skip header
+                br.readLine(); 
                 String line;
                 while ((line = br.readLine()) != null) {
                     if (line.trim().isEmpty()) continue;
@@ -279,7 +259,7 @@ public class MotorPHPayrollSystem {
             double grossSecond = secondHalfHours * hourlyRate;
             double monthlyGross = grossFirst + grossSecond;
 
-            // --- Deductions computed on combined monthly gross (Rule 5) ---
+            // --- Deductions computed on combined monthly gross  ---
             double sss        = computeSSS(monthlyGross);
             double philHealth = computePhilHealth(monthlyGross);
             double pagIbig    = computePagIbig(monthlyGross);
@@ -312,14 +292,7 @@ public class MotorPHPayrollSystem {
         }
     }
 
-    // =======================================================
     // COMPUTE HOURS WORKED
-    // Rules:
-    //   - Only count 8:00 AM to 5:00 PM (max 8 hrs, no overtime).
-    //   - Grace period: login <= 8:10 AM is treated as exactly 8:00 AM.
-    //   - Deduct 1-hour lunch break only if total raw time > 1 hour.
-    //   - Logout capped at 5:00 PM.
-    // =======================================================
     static double computeHours(LocalTime rawTimeIn, LocalTime rawTimeOut) {
 
         LocalTime shiftStart  = LocalTime.of(8, 0);
@@ -345,11 +318,7 @@ public class MotorPHPayrollSystem {
         return workedMinutes / 60.0;
     }
 
-    // =======================================================
     // GOVERNMENT DEDUCTION METHODS 
-    // All computed on the combined monthly gross salary.
-    // =======================================================
-
     // SSS — bracket-based employee contribution table
     static double computeSSS(double monthlyGross) {
         if      (monthlyGross < 3250)  return 135.00;
@@ -399,7 +368,7 @@ public class MotorPHPayrollSystem {
         else                           return 1125.00;
     }
 
-    // PhilHealth — 3% of monthly gross, employee pays 50%, floor PHP 300, ceiling PHP 1800 total premium
+    // PhilHealth 
     static double computePhilHealth(double monthlyGross) {
         double premium = monthlyGross * 0.03;
         if (premium < 300)  premium = 300;
@@ -407,7 +376,7 @@ public class MotorPHPayrollSystem {
         return premium / 2; // employee share
     }
 
-    // Pag-IBIG — 1% (PHP 1000-1500), 2% (above PHP 1500), capped at PHP 100
+    // Pag-IBIG 
     static double computePagIbig(double monthlyGross) {
         double contribution = 0;
         if (monthlyGross >= 1000 && monthlyGross <= 1500) {
@@ -430,10 +399,8 @@ public class MotorPHPayrollSystem {
         else                              return 200833.33 + (taxableIncome - 666667) * 0.35;
     }
 
-    // =======================================================
     // HELPER — Find employee record by employee number
     // Returns the split CSV row, or null if not found.
-    // =======================================================
     static String[] findEmployee(String inputEmpNo) {
         File f = new File(EMP_FILE);
         if (!f.exists()) {
@@ -442,7 +409,7 @@ public class MotorPHPayrollSystem {
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
-            br.readLine(); // skip header
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
@@ -457,11 +424,9 @@ public class MotorPHPayrollSystem {
         return null; // not found
     }
 
-    // =======================================================
     // HELPER — Parse a time string into LocalTime
     // Supports formats: "H:MM" or "HH:MM"
     // Returns null if the string cannot be parsed.
-    // =======================================================
     static LocalTime parseTime(String timeStr) {
         try {
             String[] parts = timeStr.split(":");
@@ -473,10 +438,8 @@ public class MotorPHPayrollSystem {
         }
     }
 
-    // =======================================================
     // HELPER — Parse a double safely, stripping commas first
     // Returns 0 if the string is not a valid number.
-    // =======================================================
     static double parseDouble(String value) {
         try {
             return Double.parseDouble(value.replace(",", "").trim());
@@ -485,12 +448,8 @@ public class MotorPHPayrollSystem {
         }
     }
 
-    // =======================================================
     // HELPER — Split a CSV line, correctly handling quoted fields
     // that contain commas (e.g., "90,000" or "Valero Street, Makati").
-    // Walks character-by-character: toggles inQuotes when it sees a
-    // double-quote, and only splits on commas that are outside quotes.
-    // =======================================================
     static String[] splitCsvLine(String line) {
         java.util.List<String> fields = new java.util.ArrayList<>();
         StringBuilder current = new StringBuilder();
@@ -513,9 +472,7 @@ public class MotorPHPayrollSystem {
         return fields.toArray(new String[0]);
     }
 
-    // =======================================================
     // HELPER — Return the month name for a given month number
-    // =======================================================
     static String getMonthName(int month) {
         switch (month) {
             case 1:  return "January";
