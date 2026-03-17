@@ -21,8 +21,8 @@ public class MotorPH_Revised {
     // FILE PATHS
     // Relative paths are used so the program runs on any machine without editing hardcoded absolute directories.
     // -------------------------------------------------------
-    static final String EMPLOYEE_FILE_PATH   = "employee.csv";
-    static final String ATTENDANCE_FILE_PATH = "attendance.csv";
+    static final String EMPLOYEE_FILE_PATH   = "resources/employee.csv";
+    static final String ATTENDANCE_FILE_PATH = "resources/attendance.csv";
  
     // -------------------------------------------------------
     // PAYROLL PERIOD CONSTANTS
