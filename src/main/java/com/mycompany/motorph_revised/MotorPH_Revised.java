@@ -142,6 +142,7 @@ public class MotorPH_Revised {
  
         // If the user did not choose option 1, exit the method
         if (!staffMenuChoice.equals("1")) {
+            System.out.println("Program has been terminated.");
             return;
         }
  
@@ -344,7 +345,7 @@ public class MotorPH_Revised {
             double firstCutoffHours  = 0; // Hours worked on days 1 through 15
             double secondCutoffHours = 0; // Hours worked on days 16 through end
  
-            // Get the actual last day of this month (e.g., 30 for June, 31 for July)
+            // Get the actual last day of this month (ex. 30 for June, 31 for July)
             int lastDayOfMonth = YearMonth.of(PAYROLL_YEAR, month).lengthOfMonth();
  
             // Scan the preloaded attendance list for this employee and month
