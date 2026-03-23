@@ -169,7 +169,6 @@ public class MotorPH_Revised {
         }
     }
         
- 
     // =======================================================
     // DISPLAY EMPLOYEE INFO
     // Used by the employee login menu to show basic details.
