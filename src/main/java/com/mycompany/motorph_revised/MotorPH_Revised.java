@@ -162,9 +162,13 @@ public class MotorPH_Revised {
         } else if (payrollSubChoice.equals("2")) {
             // Process every employee found in the employee CSV file
             processAllEmployees();
+            
+        } else {
+            // Option 3 or any invalid input - display termination message
+            System.out.println("Program has been terminated.");
         }
-        // Option 3 or invalid input falls through and exits
     }
+        
  
     // =======================================================
     // DISPLAY EMPLOYEE INFO
